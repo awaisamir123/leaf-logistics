@@ -3,6 +3,9 @@ import { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 // Bootstrap Bundle JS
 import "bootstrap/dist/js/bootstrap.bundle.min";
+// Bootstrap Icons
+import "bootstrap-icons/font/bootstrap-icons.css";
+
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import TopNews from "./pages/TopNews";

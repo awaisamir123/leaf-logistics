@@ -1,11 +1,13 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function CategoriesComponent(props: any) {
   const navigate = useNavigate();
+  const newsCountry = localStorage.getItem(`country_code`) ?? "gb";
   const { articles } = props?.news;
   const handledDetails = (article: any) => {
-    localStorage.setItem("newsDetail", JSON.stringify(article));
+    const articleDetails = { ...article, path: "/Categories" };
+    localStorage.setItem("newsDetail", JSON.stringify(articleDetails));
     navigate("/news-detail");
   };
   return (
@@ -14,7 +16,10 @@ function CategoriesComponent(props: any) {
         <div className="row">
           <div className="col-12 mt-5 mb-5 d-flex">
             <h2>
-              News by <span className="text-info">Great Britian</span>
+              News by{" "}
+              <span className="text-info">
+                {newsCountry === "gb" ? "Great Britian" : "United States"}
+              </span>
             </h2>
           </div>
         </div>
@@ -48,7 +53,14 @@ function CategoriesComponent(props: any) {
                   <p className="text-muted mt-3">
                     {article?.content?.split("").slice(0, 130).join("") ||
                       article?.description?.split("").slice(0, 130).join("")}
-                    ...
+                    <span> </span>
+                    <span className="text-decoration-underline text-primary">
+                      More
+                      <i
+                        className="bi bi-chevron-right"
+                        style={{ fontSize: "13px" }}
+                      ></i>
+                    </span>
                   </p>
                 </div>
               </div>
