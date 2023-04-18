@@ -79,3 +79,21 @@ button:focus-visible {
 .hr-info{
   border:3px solid green;
 }
+.background-search{
+  background: none !important;
+}
+.border-search{
+  border-left: none !important;
+}
+.border-search:focus-within{
+  border-color:none !important;
+  outline: 0;
+  box-shadow: none !important;
+}
+.telegram:focus-within{
+  color: #212529;
+    border-color: #86b7fe;
+    outline: 0;
+    box-shadow: 0 0 0 0.1rem #94C0FD;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}

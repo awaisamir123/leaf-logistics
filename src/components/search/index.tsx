@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { searchNews } from "../../redux/news/newsSlice";
+import { resetNewsSlice, searchNews } from "../../redux/news/newsSlice";
 
 function SearchComponent() {
   const navigate = useNavigate();
@@ -10,11 +10,26 @@ function SearchComponent() {
   const { isLoading, searchNewsData } = useSelector(
     (state: any) => state.newsReducer
   );
-  const [searchValue, setSearchValue] = useState();
+  const [searchValue, setSearchValue] = useState("");
+  useEffect(() => {
+    if (searchValue) {
+      dispatch(searchNews(searchValue));
+    }
+  }, [newsCountry]);
   const handledDetails = (article: any) => {
     const articleDetails = { ...article, path: "/search" };
     localStorage.setItem("newsDetail", JSON.stringify(articleDetails));
     navigate("/news-detail");
+  };
+  const searcDetails = (e: any) => {
+    e.preventDefault();
+    setSearchValue(e?.target?.value);
+    let searchTerm: any = e?.target?.value;
+    if (searchTerm) {
+      dispatch(searchNews(searchTerm));
+    } else {
+      dispatch(resetNewsSlice());
+    }
   };
   return (
     <>
@@ -32,19 +47,19 @@ function SearchComponent() {
         <div className="row justify-content-center">
           <div className="w-50 mt-3 mb-2">
             <div className="form-outline text-center">
-              <input
-                type="search"
-                id="form1"
-                className="form-control"
-                placeholder="search term.."
-                value={searchValue}
-                onChange={(e: any) => setSearchValue(e.target.value)}
-                onKeyDown={(event) => {
-                  if (event.key === "Enter") {
-                    dispatch(searchNews(searchValue));
-                  }
-                }}
-              />
+              <div className="input-group telegram rounded">
+                <span className="input-group-text background-search">
+                  <i className="bi bi-search"></i>
+                </span>
+                <input
+                  type="search"
+                  id="form1"
+                  className="form-control border-search"
+                  placeholder="search term.."
+                  value={searchValue}
+                  onChange={(e) => searcDetails(e)}
+                />
+              </div>
             </div>
           </div>
         </div>
